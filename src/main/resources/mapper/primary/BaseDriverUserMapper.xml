@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lty.dao.primary.BaseDriverUserDao">
+  <resultMap id="BaseResultMap" type="BaseDriverUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="driver_id" jdbcType="INTEGER" property="driverId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="bus_company_id" jdbcType="INTEGER" property="busCompanyId" />
+    <result column="last_login_time" jdbcType="CHAR" property="lastLoginTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="city_code" jdbcType="VARCHAR" property="cityCode" />
+    <result column="create_time" jdbcType="CHAR" property="createTime" />
+    <result column="modify_time" jdbcType="CHAR" property="modifyTime" />
+    <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId" />
+    <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, driver_id, user_name, password, bus_company_id, last_login_time, status, city_code, 
+    create_time, modify_time, modify_user_id, create_user_id
+  </sql>
+
+
+  <sql id="entity_column">
+    <if test="driverId != null">
+      and driver_id = #{driverId,jdbcType=INTEGER},
+    </if>
+    <if test="userName != null">
+      and user_name = #{userName,jdbcType=VARCHAR},
+    </if>
+    <if test="password != null">
+      and password = #{password,jdbcType=VARCHAR},
+    </if>
+    <if test="busCompanyId != null">
+      and bus_company_id = #{busCompanyId,jdbcType=INTEGER},
+    </if>
+    <if test="lastLoginTime != null">
+      and  last_login_time = #{lastLoginTime,jdbcType=CHAR},
+    </if>
+    <if test="status != null">
+      and   status = #{status,jdbcType=INTEGER},
+    </if>
+    <if test="cityCode != null">
+      and city_code = #{cityCode,jdbcType=VARCHAR},
+    </if>
+    <if test="createTime != null">
+      and create_time = #{createTime,jdbcType=CHAR},
+    </if>
+    <if test="modifyTime != null">
+      and modify_time = #{modifyTime,jdbcType=CHAR},
+    </if>
+    <if test="modifyUserId != null">
+      and modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+    </if>
+    <if test="createUserId != null">
+      and create_user_id = #{createUserId,jdbcType=INTEGER},
+    </if>
+  </sql>
+  <select id="count" resultType="Integer" parameterType="Map">
+    SELECT
+    COUNT(1)
+    FROM base_driver_user
+    WHERE 1=1
+    <include refid="entity_column"/>
+  </select>
+
+  <select id="findOne" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from base_driver_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findUserNameAndPassword" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from base_driver_user
+    where user_name = #{userName,jdbcType=INTEGER}
+    and password = #{password,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectList" resultMap="BaseResultMap" parameterType="BaseDriverUser">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM base_driver_user
+    WHERE 1=1
+    <include refid="entity_column"/>
+  </select>
+
+
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from base_driver_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+
+  <insert id="save" parameterType="BaseDriverUser">
+    insert into base_driver_user (id, driver_id, user_name, 
+      password, bus_company_id, last_login_time, 
+      status, city_code, create_time, 
+      modify_time, modify_user_id, create_user_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{driverId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{busCompanyId,jdbcType=INTEGER}, #{lastLoginTime,jdbcType=CHAR}, 
+      #{status,jdbcType=INTEGER}, #{cityCode,jdbcType=VARCHAR}, #{createTime,jdbcType=CHAR}, 
+      #{modifyTime,jdbcType=CHAR}, #{modifyUserId,jdbcType=INTEGER}, #{createUserId,jdbcType=INTEGER}
+      )
+  </insert>
+
+  <update id="update" parameterType="BaseDriverUser">
+    update base_driver_user
+    set driver_id = #{driverId,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      bus_company_id = #{busCompanyId,jdbcType=INTEGER},
+      last_login_time = #{lastLoginTime,jdbcType=CHAR},
+      status = #{status,jdbcType=INTEGER},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=CHAR},
+      modify_time = #{modifyTime,jdbcType=CHAR},
+      modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+      create_user_id = #{createUserId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

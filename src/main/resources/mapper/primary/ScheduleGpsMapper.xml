@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lty.dao.primary.ScheduleGpsDao" >
+  <resultMap id="BaseResultMap" type="ScheduleGps" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="schedule_id" property="scheduleId" jdbcType="VARCHAR" />
+    <result column="route_id" property="routeId" jdbcType="INTEGER" />
+    <result column="longitude" property="longitude" jdbcType="DECIMAL" />
+    <result column="latitude" property="latitude" jdbcType="DECIMAL" />
+    <result column="bus_id" property="busId" jdbcType="INTEGER" />
+    <result column="driver_id" property="driverId" jdbcType="INTEGER" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="CHAR" />
+    <result column="gps_time" property="gpsTime" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, schedule_id, route_id, longitude, latitude, bus_id, driver_id, city_code, create_time, 
+    gps_time
+  </sql>
+  <sql id="entity_column">
+    <if test="scheduleId != null" >
+     AND schedule_id = #{scheduleId,jdbcType=VARCHAR},
+    </if>
+    <if test="routeId != null" >
+      AND route_id = #{routeId,jdbcType=INTEGER},
+    </if>
+    <if test="longitude != null" >
+      AND longitude = #{longitude,jdbcType=DECIMAL},
+    </if>
+    <if test="latitude != null" >
+      AND latitude = #{latitude,jdbcType=DECIMAL},
+    </if>
+    <if test="busId != null" >
+      AND bus_id = #{busId,jdbcType=INTEGER},
+    </if>
+    <if test="driverId != null" >
+      AND driver_id = #{driverId,jdbcType=INTEGER},
+    </if>
+    <if test="cityCode != null" >
+      AND city_code = #{cityCode,jdbcType=VARCHAR},
+    </if>
+    <if test="createTime != null" >
+      AND create_time = #{createTime,jdbcType=CHAR},
+    </if>
+    <if test="gpsTime != null" >
+      AND gps_time = #{gpsTime,jdbcType=CHAR},
+    </if>
+  </sql>
+  <select id="count" resultType="Integer" parameterType="Map">
+    SELECT
+    COUNT(1)
+    FROM schedule_gps
+    WHERE 1=1
+    <include refid="entity_column"/>
+  </select>
+
+  <select id="findOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from schedule_gps
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectList" resultMap="BaseResultMap" parameterType="BaseDriverUser">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM base_driver
+    WHERE 1=1
+    <include refid="entity_column"/>
+  </select>
+
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from schedule_gps
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="save" parameterType="ScheduleGps" >
+    insert into schedule_gps (id, schedule_id, route_id, 
+      longitude, latitude, bus_id, 
+      driver_id, city_code, create_time, 
+      gps_time)
+    values (#{id,jdbcType=INTEGER}, #{scheduleId,jdbcType=VARCHAR}, #{routeId,jdbcType=INTEGER},
+      #{longitude,jdbcType=DECIMAL}, #{latitude,jdbcType=DECIMAL}, #{busId,jdbcType=INTEGER}, 
+      #{driverId,jdbcType=INTEGER}, #{cityCode,jdbcType=VARCHAR}, #{createTime,jdbcType=CHAR}, 
+      #{gpsTime,jdbcType=CHAR})
+  </insert>
+
+</mapper>

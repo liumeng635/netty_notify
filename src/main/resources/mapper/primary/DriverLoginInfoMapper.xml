@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lty.dao.primary.DriverLoginInfoDao" >
+  <resultMap id="BaseResultMap" type="DriverLoginInfo" >
+    <result column="driverId" property="driverId" jdbcType="INTEGER" />
+    <result column="facility_no" property="facilityNo" jdbcType="VARCHAR" />
+    <result column="is_login" property="isLogin" jdbcType="INTEGER" />
+    <result column="facility_type" property="facilityType" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="protocol_version" property="protocolVersion" jdbcType="VARCHAR" />
+    <result column="app_version" property="appVersion" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="save" parameterType="DriverLoginInfo" >
+    insert into driver_login_info (driver_id, facility_no, is_login,
+      facility_type, create_time, protocol_version,app_version
+      )
+    values (#{driverId,jdbcType=INTEGER}, #{facilityNo,jdbcType=VARCHAR}, #{isLogin,jdbcType=INTEGER},
+      #{facilityType,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR}, #{protocolVersion,jdbcType=VARCHAR}
+      ,#{appVersion,jdbcType=VARCHAR}
+      )
+  </insert>
+</mapper>

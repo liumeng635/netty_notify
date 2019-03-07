@@ -1,0 +1,16 @@
+{
+  "header":
+  {
+    "msgSn": 123,
+    "msgId": "0x102",
+    "msgVn": "1.01"
+  },
+  "appendBody":
+  {
+    "devSn":"aaaaaaaaaa",
+    "appVn":"1.5",
+    "token":"",
+    "devType": 0
+  },
+  "body":{}
+}

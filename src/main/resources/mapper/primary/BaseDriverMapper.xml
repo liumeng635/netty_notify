@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lty.dao.primary.BaseDriverDao" >
+  <resultMap id="BaseResultMap" type="BaseDriver" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="driver_no" property="driverNo" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="phone_no" property="phoneNo" jdbcType="CHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="is_enable" property="isEnable" jdbcType="INTEGER" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="CHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="CHAR" />
+    <result column="modify_user_id" property="modifyUserId" jdbcType="INTEGER" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, driver_no, name, phone_no, address, is_enable, city_code, create_time, modify_time, 
+    modify_user_id, create_user_id
+  </sql>
+
+  <sql id="entity_column">
+    <if test="driverNo != null" >
+     AND driver_no = #{driverNo,jdbcType=VARCHAR},
+    </if>
+    <if test="name != null" >
+      AND  name = #{name,jdbcType=VARCHAR},
+    </if>
+    <if test="phoneNo != null" >
+      AND  phone_no = #{phoneNo,jdbcType=CHAR},
+    </if>
+    <if test="address != null" >
+      AND address = #{address,jdbcType=VARCHAR},
+    </if>
+    <if test="isEnable != null" >
+      AND  is_enable = #{isEnable,jdbcType=INTEGER},
+    </if>
+    <if test="cityCode != null" >
+      AND  city_code = #{cityCode,jdbcType=VARCHAR},
+    </if>
+    <if test="createTime != null" >
+      AND  create_time = #{createTime,jdbcType=CHAR},
+    </if>
+    <if test="modifyTime != null" >
+      AND  modify_time = #{modifyTime,jdbcType=CHAR},
+    </if>
+    <if test="modifyUserId != null" >
+      AND  modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+    </if>
+    <if test="createUserId != null" >
+      AND  create_user_id = #{createUserId,jdbcType=INTEGER},
+    </if>
+  </sql>
+
+  <select id="count" resultType="Integer" parameterType="Map">
+    SELECT
+    COUNT(1)
+    FROM base_driver
+    WHERE 1=1
+    <include refid="entity_column"/>
+  </select>
+
+  <select id="findOne" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from base_driver
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="BaseDriverUser">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM base_driver
+    WHERE 1=1
+    <include refid="entity_column"/>
+  </select>
+
+  <insert id="save" parameterType="BaseDriver" >
+    insert into base_driver (id, driver_no, name, 
+      phone_no, address, is_enable, 
+      city_code, create_time, modify_time, 
+      modify_user_id, create_user_id)
+    values (#{id,jdbcType=INTEGER}, #{driverNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{phoneNo,jdbcType=CHAR}, #{address,jdbcType=VARCHAR}, #{isEnable,jdbcType=INTEGER}, 
+      #{cityCode,jdbcType=VARCHAR}, #{createTime,jdbcType=CHAR}, #{modifyTime,jdbcType=CHAR}, 
+      #{modifyUserId,jdbcType=INTEGER}, #{createUserId,jdbcType=INTEGER})
+  </insert>
+
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from base_driver
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+
+  <update id="update" parameterType="BaseDriver" >
+    update base_driver
+    set driver_no = #{driverNo,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      phone_no = #{phoneNo,jdbcType=CHAR},
+      address = #{address,jdbcType=VARCHAR},
+      is_enable = #{isEnable,jdbcType=INTEGER},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=CHAR},
+      modify_time = #{modifyTime,jdbcType=CHAR},
+      modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+      create_user_id = #{createUserId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lty.dao.primary.ScheduleTripTimeDao" >
+  <resultMap id="BaseResultMap" type="ScheduleTripTime" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="schedule_id" property="scheduleId" jdbcType="VARCHAR" />
+    <result column="station_id" property="stationId" jdbcType="INTEGER" />
+    <result column="schedule_trip_id" property="scheduleTripId" javaType="INTEGER"/>
+    <result column="route_id" property="routeId" jdbcType="INTEGER" />
+    <result column="station_name" property="stationName"  />
+    <result column="station_time" property="stationTime"  />
+    <result column="bus_id" property="busId"  />
+    <result column="create_time" property="createTime"  />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, schedule_id, station_id, route_id, station_name, station_time,
+    bus_id,schedule_trip_id, create_time
+  </sql>
+
+  <select id="findOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from schedule_trip_time
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <sql id="entity_column">
+    <if test="scheduleId != null" >
+      AND schedule_id = #{scheduleId,jdbcType=INTEGER},
+    </if>
+    <if test="stationId != null" >
+      AND  station_id = #{stationId,jdbcType=INTEGER},
+    </if>
+    <if test="routeId != null" >
+      AND  route_id = #{routeId,jdbcType=INTEGER},
+    </if>
+    <if test="stationName != null" >
+      AND  station_name = #{stationName,jdbcType=VARCHAR},
+    </if>
+    <if test="stationTime != null" >
+      AND  station_time = #{stationTime,jdbcType=CHAR},
+    </if>
+    <if test="busId != null" >
+      AND  bus_id = #{busId,jdbcType=INTEGER},
+    </if>
+    <if test="createTime != null" >
+      AND  create_time = #{createTime,jdbcType=CHAR},
+    </if>
+  </sql>
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from schedule_trip_time
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="save" parameterType="ScheduleTripTime" >
+    insert into schedule_trip_time (schedule_id, station_id,
+      route_id, station_name, station_time, 
+       bus_id, create_time,schedule_trip_id
+      )
+    values (#{scheduleId,jdbcType=VARCHAR}, #{stationId,jdbcType=INTEGER},
+      #{routeId,jdbcType=INTEGER}, #{stationName,jdbcType=VARCHAR}, #{stationTime,jdbcType=CHAR}, 
+      #{busId,jdbcType=INTEGER}, #{createTime},
+      #{scheduleTripId})
+  </insert>
+
+  <update id="update" parameterType="ScheduleTripTime" >
+    update schedule_trip_time
+    set schedule_id = #{scheduleId,jdbcType=VARCHAR},
+      station_id = #{stationId,jdbcType=INTEGER},
+      route_id = #{routeId,jdbcType=INTEGER},
+      station_name = #{stationName,jdbcType=VARCHAR},
+      station_time = #{stationTime,jdbcType=CHAR},
+      bus_id = #{busId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=CHAR},
+      schedule_trip_id = #{scheduleTripId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

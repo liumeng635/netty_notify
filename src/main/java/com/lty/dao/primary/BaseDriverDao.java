@@ -1,0 +1,12 @@
+package com.lty.dao.primary;
+
+import com.lty.dao.IBaseDao;
+import com.lty.entity.primary.BaseDriver;
+
+/**
+ * 司机信息表
+ * @author zhouyongbo
+ */
+public interface BaseDriverDao extends IBaseDao<BaseDriver,Integer> {
+
+}
